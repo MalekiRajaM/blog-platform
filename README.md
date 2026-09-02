@@ -26,7 +26,7 @@
 ## ⚙️ نصب و راه‌اندازی
 
 ```bash
-git clone< https://github.com/MalekiRajaM/blog-platform.git>
+git clone https://github.com/MalekiRajaM/blog-platform.git
 cd blog-platform
 composer install
 copy .env.example .env
