@@ -7,12 +7,22 @@ use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable;
 
+    public function posts()
+{
+    return $this->hasMany(Post::class);
+}
+
+public function comments()
+{
+    return $this->hasMany(Comment::class);
+}
     /**
      * The attributes that are mass assignable.
      *
