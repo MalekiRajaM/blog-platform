@@ -1,59 +1,112 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 📝 Blog Platform API
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+یک سیستم بک‌اند برای وبلاگ چند-نویسنده، ساخته‌شده با **Laravel** — شامل مدیریت نقش‌های کاربری، انتشار پست، دسته‌بندی، برچسب‌گذاری، سیستم کامنت با تایید مدیریتی، و جستجو؛ همه به‌صورت **RESTful API**.
 
-## About Laravel
+![PHP](https://img.shields.io/badge/PHP-8.2-777BB4?logo=php)
+![Laravel](https://img.shields.io/badge/Laravel-11-FF2D20?logo=laravel)
+![Status](https://img.shields.io/badge/status-in%20progress-yellow)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## ✨ امکانات
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- احراز هویت مبتنی بر توکن (Laravel Sanctum)
+- سه سطح دسترسی: مدیر (admin)، نویسنده (author)، بازدیدکننده (visitor)
+- عملیات کامل CRUD روی پست‌ها، با وضعیت پیش‌نویس/منتشرشده
+- دسته‌بندی و برچسب‌گذاری (رابطه‌ی many-to-many)
+- سیستم کامنت با نیاز به تایید مدیر پیش از نمایش عمومی
+- جستجو در عنوان و محتوای پست‌ها
 
-## Learning Laravel
+## 🛠 پیش‌نیازها
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+- PHP >= 8.2
+- Composer
+- MySQL (از طریق XAMPP)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## ⚙️ نصب و راه‌اندازی
 
-## Laravel Sponsors
+```bash
+git clone< https://github.com/MalekiRajaM/blog-platform.git>
+cd blog-platform
+composer install
+copy .env.example .env
+php artisan key:generate
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+سپس تو فایل `.env`، اطلاعات دیتابیس رو تنظیم کن:
 
-### Premium Partners
+```
+DB_DATABASE=blog_platform
+DB_USERNAME=root
+DB_PASSWORD=
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+و در نهایت:
 
-## Contributing
+```bash
+php artisan migrate
+php artisan serve
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+پروژه روی آدرس `http://127.0.0.1:8000` بالا میاد.
 
-## Code of Conduct
+## 🔑 احراز هویت
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+بعد از ثبت‌نام یا ورود، یک توکن دریافت می‌کنید که باید در هدر درخواست‌های محافظت‌شده ارسال شود:
 
-## Security Vulnerabilities
+```
+Authorization: Bearer <your-token>
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## 📚 مستندات API
 
-## License
+### Auth
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+| Method | Endpoint | توضیح | نیاز به توکن |
+|---|---|---|---|
+| POST | `/api/register` | ثبت‌نام کاربر جدید | خیر |
+| POST | `/api/login` | ورود | خیر |
+| POST | `/api/logout` | خروج | بله |
+
+### Posts
+
+| Method | Endpoint | توضیح | نیاز به توکن |
+|---|---|---|---|
+| GET | `/api/posts` | لیست پست‌های منتشرشده (پارامتر `?search=` برای جستجو) | خیر |
+| GET | `/api/posts/{id}` | نمایش یک پست | خیر |
+| POST | `/api/posts` | ساخت پست جدید | بله (admin/author) |
+| PUT | `/api/posts/{id}` | ویرایش پست | بله (صاحب پست یا admin) |
+| DELETE | `/api/posts/{id}` | حذف پست | بله (صاحب پست یا admin) |
+
+### Categories
+
+| Method | Endpoint | توضیح | نیاز به توکن |
+|---|---|---|---|
+| GET | `/api/categories` | لیست دسته‌بندی‌ها | خیر |
+| GET | `/api/categories/{id}` | نمایش یک دسته‌بندی با پست‌هاش | خیر |
+| POST | `/api/categories` | ساخت دسته‌بندی | بله (admin) |
+| DELETE | `/api/categories/{id}` | حذف دسته‌بندی | بله (admin) |
+
+### Tags
+
+| Method | Endpoint | توضیح | نیاز به توکن |
+|---|---|---|---|
+| GET | `/api/tags` | لیست برچسب‌ها | خیر |
+| POST | `/api/tags` | ساخت برچسب | بله (admin/author) |
+
+### Comments
+
+| Method | Endpoint | توضیح | نیاز به توکن |
+|---|---|---|---|
+| GET | `/api/posts/{id}/comments` | لیست کامنت‌های تاییدشده‌ی یک پست | خیر |
+| POST | `/api/posts/{id}/comments` | ثبت کامنت جدید | بله |
+| POST | `/api/comments/{id}/approve` | تایید کامنت | بله (admin) |
+| DELETE | `/api/comments/{id}` | حذف کامنت | بله (نویسنده‌ی کامنت یا admin) |
+
+## 👤 نقش‌های کاربری
+
+| نقش | دسترسی |
+|---|---|
+| `visitor` | مشاهده‌ی پست‌ها و ارسال کامنت |
+| `author` | + ساخت/ویرایش/حذف پست‌های خودش، ساخت برچسب |
+| `admin` | دسترسی کامل به همه‌ی بخش‌ها + تایید کامنت |
